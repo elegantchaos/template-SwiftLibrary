@@ -3,16 +3,12 @@
 //  All code (c) xXxyearxXx - present day, xXxownerxXx.
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
-import XCTest
-import XCTestExtensions
+import Testing
+import ChaosTesting
 
 @testable import xXxprojectxXx
 
-final class xXxprojectxXxTests: XCTestCase {
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct
-        // results.
-        XCTAssertEqual(xXxprojectxXx().text, "Hello, World!")
-    }
+@Test func name() async throws {
+    // TODO: add some tests here
+    // #expect(someExpression)
 }

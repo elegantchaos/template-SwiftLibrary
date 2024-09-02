@@ -1,4 +1,4 @@
-// swift-tools-version:5.6
+// swift-tools-version:6.0
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 //  Created by xXxuserxXx on xXxdatexXx.
@@ -6,6 +6,23 @@
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
 import PackageDescription
+import Foundation
+
+var dependencies: [Package.Dependency] = [
+            .package(url: "https://github.com/elegantchaos/ChaosTesting.git", from: "1.0.1"),
+]
+
+var plugins: [Target.PluginUsage] = []
+
+// Add in support for the ActionBuilder plugin if we're building with it.
+if ProcessInfo.processInfo.environment["RESOLVE_ACTION_PLUGINS"] != nil {
+    print("'action builder'")
+    dependencies.append(contentsOf: [
+        .package(url: "https://github.com/elegantchaos/ActionBuilderPlugin.git", from: "2.0.0"),
+    ])
+    plugins.append(.plugin(name: "ActionBuilderPlugin", package: "ActionBuilderPlugin"))
+}
+
 
 let package = Package(
     name: "xXxprojectxXx",
@@ -21,28 +38,24 @@ let package = Package(
         ),
     ],
     
-    dependencies: [
-        // testing support
-        .package(url: "https://github.com/elegantchaos/XCTestExtensions.git", from: "1.4.2"),
-        
-        // tools
-        .package(url: "https://github.com/elegantchaos/ActionBuilderPlugin.git", from: "1.0.7"),
-        .package(url: "https://github.com/elegantchaos/SwiftFormatterPlugin.git", from: "1.0.3"),
-    ],
+    dependencies: dependencies,
     
     targets: [
         .target(
             name: "xXxprojectxXx",
             dependencies: [
-            ]
+            ],
+            plugins: plugins
         ),
         
         .testTarget(
             name: "xXxprojectxXxTests",
             dependencies: [
                 "xXxprojectxXx",
-                "XCTestExtensions"
+                "ChaosTesting"
             ]
         ),
     ]
 )
+
+
